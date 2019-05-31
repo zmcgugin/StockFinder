@@ -13,7 +13,7 @@ import java.nio.charset.Charset
 class FinvizScraperTest {
 
     @Test
-    fun `pullStockRows should extract the list of rows and return finviz rows`() {
+    fun `findValueStocks should page though all finviz results`() {
         val html = FileUtils.readFileToString(File("src/test/resources/finvizSample.html"), Charset.defaultCharset())
         var document = Jsoup.parse(html)
 

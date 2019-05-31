@@ -14,7 +14,14 @@ class FinvizScraper {
     fun pullStockRows(document: Document): List<FinvizRow> {
         val elements: List<Element> = document.select(".table-dark-row-cp, .table-light-row-cp")
 
-        return elements.map {convertOverviewToRow(it)}
+        return elements.filter {isValid(it)}.map {convertOverviewToRow(it)}
+    }
+
+    private fun isValid(element: Element): Boolean {
+        val elements = element.select("td")
+        var valid = true
+        elements.filter { it.text() == "-" || it.text() == "" }.forEach { valid = false }
+        return valid
     }
 
     private fun convertOverviewToRow(element: Element): FinvizRow {
