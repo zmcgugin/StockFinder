@@ -1,12 +1,10 @@
 package com.github.zmcgugin.finviz.services
 
-import com.github.zmcgugin.finviz.objects.FinvizRow
+import com.github.zmcgugin.objects.StockInformation
 import org.apache.commons.io.FileUtils
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.io.File
 import java.nio.charset.Charset
 
@@ -17,7 +15,7 @@ class FinvizScraperTest {
         val html = FileUtils.readFileToString(File("src/test/resources/finvizSample.html"), Charset.defaultCharset())
         var document = Jsoup.parse(html)
 
-        val result: List<FinvizRow> = FinvizScraper().pullStockRows(document)
+        val result: List<StockInformation> = FinvizScraper().pullStockRows(document)
 
         assertEquals(result.size, 20)
 
@@ -26,7 +24,7 @@ class FinvizScraperTest {
         assertEquals(result.get(0).sector, "Financial")
         assertEquals(result.get(0).industry, "Asset Management")
         assertEquals(result.get(0).country, "USA")
-        assertEquals(result.get(0).marketCap, "72.22M")
+        assertEquals(result.get(0).marketCap, 72_220_000.0, 0.0)
         assertEquals(result.get(0).pE, 5.43, 0.0)
         assertEquals(result.get(0).price, 9.44, 0.0)
         assertEquals(result.get(0).change, -0.48, 0.0)
