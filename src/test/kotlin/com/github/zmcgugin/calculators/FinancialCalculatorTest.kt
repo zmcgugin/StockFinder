@@ -12,6 +12,24 @@ class FinancialCalculatorTest {
     val subject: FinancialCalculator = spyk(FinancialCalculator(kodein))
 
     @Test
+    fun `should calculate grahams valuation`() {
+        val row = StockInformation()
+        row.eps = 4.19
+        row.bookValue = 55.84
+
+        assertEquals(72.56, subject.calculateGrahamsValue(row), 0.01)
+    }
+
+    @Test
+    fun `should calculate debt ratio`() {
+        val row = StockInformation()
+        row.liabilities = 1.0
+        row.assets = 3.0
+
+        assertEquals(33.33, subject.calculateDebtRatio(row), 0.01)
+    }
+
+    @Test
     fun `calculateIntrinsicValue should calculate intrinsic value of stock_1`() {
         val row = StockInformation()
         row.last12MonthsFreeCashFlow = 1_700_000_000.0

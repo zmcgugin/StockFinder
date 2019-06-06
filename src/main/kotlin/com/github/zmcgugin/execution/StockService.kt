@@ -1,6 +1,5 @@
 package com.github.zmcgugin.execution
 
-import com.github.zmcgugin.constants.Constants.Companion.THREAD_COUNT
 import com.github.zmcgugin.constants.Settings
 import com.github.zmcgugin.finviz.services.FinvizScraper
 import com.github.zmcgugin.marketwatch.services.MarketwatchScraper
@@ -9,8 +8,6 @@ import com.github.zmcgugin.utility.DisplayUtil
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
-import java.util.concurrent.ForkJoinPool
-import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
 
 class StockService(override val kodein: Kodein) : KodeinAware {

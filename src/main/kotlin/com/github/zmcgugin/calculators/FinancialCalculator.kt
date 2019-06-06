@@ -7,8 +7,17 @@ import org.kodein.di.KodeinAware
 import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.pow
+import kotlin.math.sqrt
 
 class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
+
+    fun calculateDebtRatio(it: StockInformation): Double {
+        return round((it.liabilities / it.assets) * 100)
+    }
+
+    fun calculateGrahamsValue(it: StockInformation): Double {
+        return round(sqrt(15 * 1.5 * it.eps * it.bookValue))
+    }
 
     fun calculateBookValue(it: StockInformation): Double {
         return round((it.assets - it.liabilities) / it.sharesOutstanding)
@@ -39,6 +48,10 @@ class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
     }
 
     fun round(it: Double): Double {
+        if(it.equals(Double.NaN)) {
+            return Double.NaN
+        }
+
         return BigDecimal(it).setScale(2, RoundingMode.HALF_EVEN).toDouble()
     }
 }

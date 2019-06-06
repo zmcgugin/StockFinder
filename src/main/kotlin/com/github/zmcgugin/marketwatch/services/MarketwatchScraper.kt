@@ -24,12 +24,14 @@ class MarketwatchScraper(override val kodein: Kodein) : KodeinAware {
         row.freeCashFlowIntrinsicValue = financialCalculator.calculateCashFlowIntrinsicValue(row)
         row.freeCashFlowIntrinsicMarginOfSafety = financialCalculator.calculateCashFlowIntrensicMargin(row)
         row.bookValue = financialCalculator.calculateBookValue(row)
+        row.grahamsValue = financialCalculator.calculateGrahamsValue(row)
+        row.debtRatio = financialCalculator.calculateDebtRatio(row)
 
         return row
     }
 
     fun lookupSummaryInformation(row: StockInformation) {
-//        println("Looking up summary page for ${row.ticker}")
+        println("Looking up summary page for ${row.ticker}")
         val summaryDocument = grabHtml("https://www.marketwatch.com/investing/stock/${row.ticker}")
         val sharesOutstanding = summaryDocument.select(".kv__item").filter { it.text().contains("Shares Outstanding") }[0].text().replace("Shares Outstanding ", "")
         val eps = summaryDocument.select(".kv__item").filter { it.text().contains("EPS") }[0].text().replace("EPS ", "")
