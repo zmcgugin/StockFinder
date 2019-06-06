@@ -18,22 +18,27 @@ class MarketwatchScraper(override val kodein: Kodein) : KodeinAware {
     }
 
     fun updateFinancials(row: StockInformation): StockInformation {
-        lookupSharesOutstanding(row)
+        lookupSummaryInformation(row)
         lookupCashFlow(row)
         lookupDebt(row)
-        financialCalculator.calculateCashFlowIntrinsicValue(row)
+        row.freeCashFlowIntrinsicValue = financialCalculator.calculateCashFlowIntrinsicValue(row)
+        row.freeCashFlowIntrinsicMarginOfSafety = financialCalculator.calculateCashFlowIntrensicMargin(row)
+        row.bookValue = financialCalculator.calculateBookValue(row)
 
         return row
     }
 
-    private fun lookupSharesOutstanding(row: StockInformation) {
-        println("Looking up summary page for ${row.ticker}")
+    fun lookupSummaryInformation(row: StockInformation) {
+//        println("Looking up summary page for ${row.ticker}")
         val summaryDocument = grabHtml("https://www.marketwatch.com/investing/stock/${row.ticker}")
         val sharesOutstanding = summaryDocument.select(".kv__item").filter { it.text().contains("Shares Outstanding") }[0].text().replace("Shares Outstanding ", "")
+        val eps = summaryDocument.select(".kv__item").filter { it.text().contains("EPS") }[0].text().replace("EPS ", "")
+
         row.sharesOutstanding = Convertor.convertStringToNumber(sharesOutstanding)
+        row.eps = Convertor.convertStringToNumber(eps)
     }
 
-    private fun lookupCashFlow(row: StockInformation) {
+    fun lookupCashFlow(row: StockInformation) {
         println("Looking up cashflow page for ${row.ticker}")
         val cashFlowDocument =
             grabHtml("https://www.marketwatch.com/investing/stock/${row.ticker}/financials/cash-flow/quarter")
@@ -46,7 +51,7 @@ class MarketwatchScraper(override val kodein: Kodein) : KodeinAware {
         row.last12MonthsFreeCashFlow = firstQuarterCashFlow + secondQuarterCashFlow + thirdQuarterCashFlow + fourthQuarterCashFlow
     }
 
-    private fun lookupDebt(row: StockInformation) {
+    fun lookupDebt(row: StockInformation) {
         println("Looking up balancesheet page for ${row.ticker}")
         val balanceSheetDocument =
             grabHtml("https://www.marketwatch.com/investing/stock/${row.ticker}/financials/balance-sheet/quarter")

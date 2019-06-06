@@ -8,7 +8,8 @@ data class StockInformation (
     var industry: String,
     var country: String,
     var marketCap: Double,
-    var pE: Double,
+    var pe: Double,
+    var eps: Double,
     var price: Double,
     var change: Double,
     var volume: Double,
@@ -17,7 +18,8 @@ data class StockInformation (
     var liabilities:Double = 0.0,
     var sharesOutstanding: Double,
     var freeCashFlowIntrinsicValue: Double,
-    var freeCashFlowIntrinsicMarginOfSafety: Double
+    var freeCashFlowIntrinsicMarginOfSafety: Double,
+    var bookValue: Double
 
 
-) { constructor(): this("", "", "", "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) }
+) { constructor(): this("", "", "", "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) }

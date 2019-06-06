@@ -14,9 +14,11 @@ class DisplayUtil(override val kodein: Kodein) : KodeinAware {
             println(
                 "Ticker: ${it.ticker},\t\t" +
                 "Price: ${it.price},\t\t " +
-                "Intrinsic Value: ${it.freeCashFlowIntrinsicValue},\t\t " +
-                "Intrinsic Margin: ${it.freeCashFlowIntrinsicMarginOfSafety},\t\t " +
-                "Volume: ${it.volume}"
+                "Volume: ${it.volume}" +
+                "Book Value: ${it.bookValue},\t\t" +
+                "Intrinsic Cash Value: ${it.freeCashFlowIntrinsicValue},\t\t"
+
+
             )
         }
     }

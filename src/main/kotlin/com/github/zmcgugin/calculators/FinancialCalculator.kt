@@ -10,7 +10,15 @@ import kotlin.math.pow
 
 class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
 
-    fun calculateCashFlowIntrinsicValue(it: StockInformation): StockInformation {
+    fun calculateBookValue(it: StockInformation): Double {
+        return round((it.assets - it.liabilities) / it.sharesOutstanding)
+    }
+
+    fun calculateCashFlowIntrensicMargin(it: StockInformation): Double {
+        return round(((it.freeCashFlowIntrinsicValue - it.price) / it.price) * 100)
+    }
+
+    fun calculateCashFlowIntrinsicValue(it: StockInformation): Double {
         var tenthValue = 0.0
         var total = 0.0
         var value: Double
@@ -27,9 +35,10 @@ class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
             total += value
         }
 
-        it.freeCashFlowIntrinsicValue = BigDecimal(total / it.sharesOutstanding).setScale(2, RoundingMode.HALF_EVEN).toDouble()
-        it.freeCashFlowIntrinsicMarginOfSafety = BigDecimal(((it.freeCashFlowIntrinsicValue - it.price) / it.price) * 100).setScale(2, RoundingMode.HALF_EVEN).toDouble()
+        return round(total / it.sharesOutstanding)
+    }
 
-        return it
+    fun round(it: Double): Double {
+        return BigDecimal(it).setScale(2, RoundingMode.HALF_EVEN).toDouble()
     }
 }
