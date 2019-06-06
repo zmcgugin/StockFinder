@@ -47,6 +47,10 @@ class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
         return round(total / it.sharesOutstanding)
     }
 
+    fun calculatePEStockValue(it: StockInformation): Double {
+        return round(it.pe / it.eps)
+    }
+
 
     companion object {
         fun round(it: Double): Double {

@@ -52,7 +52,6 @@ class FinvizScraper {
         finvizRow.industry = elements[4].text()
         finvizRow.country = elements[5].text()
         finvizRow.marketCap = Convertor.convertStringToNumber(elements[6].text())
-        finvizRow.pe = Convertor.convertStringToNumber(elements[7].text())
         finvizRow.price = Convertor.convertStringToNumber(elements[8].text())
         finvizRow.change = Convertor.convertStringToNumber(elements[9].text())
         finvizRow.volume = Convertor.convertStringToNumber(elements[10].text())

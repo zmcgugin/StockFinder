@@ -30,6 +30,7 @@ class MarketwatchScraper(override val kodein: Kodein) : KodeinAware {
             row.bookValue = financialCalculator.calculateBookValue(row)
             row.grahamsValue = financialCalculator.calculateGrahamsValue(row)
             row.debtRatio = financialCalculator.calculateDebtRatio(row)
+            row.priceToEarningsPerStockValue = financialCalculator.calculatePEStockValue(row)
         } catch(e: UnableToRetrieveException) {
             val skipStock = StockInformation()
             skipStock.ticker = SKIPPED
@@ -44,9 +45,11 @@ class MarketwatchScraper(override val kodein: Kodein) : KodeinAware {
         val summaryDocument = grabHtml("https://www.marketwatch.com/investing/stock/${row.ticker}")
         val sharesOutstanding = safeExecute{summaryDocument.select(".kv__item").filter { it.text().contains("Shares Outstanding") }[0].text().replace("Shares Outstanding ", "")}
         val eps = safeExecute{summaryDocument.select(".kv__item").filter { it.text().contains("EPS") }[0].text().replace("EPS ", "")}
+        val pe = safeExecute{summaryDocument.select(".kv__item").filter { it.text().contains("P/E Ratio") }[0].text().replace("P/E Ratio ", "")}
 
         row.sharesOutstanding = Convertor.convertStringToNumber(sharesOutstanding)
         row.eps = Convertor.convertStringToNumber(eps)
+        row.pe = Convertor.convertStringToNumber(pe)
     }
 
     fun lookupCashFlow(row: StockInformation) {

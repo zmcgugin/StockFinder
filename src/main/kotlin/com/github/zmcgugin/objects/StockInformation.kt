@@ -21,7 +21,8 @@ data class StockInformation (
     var freeCashFlowIntrinsicMarginOfSafety: Double,
     var bookValue: Double,
     var grahamsValue: Double,
-    var debtRatio: Double
+    var debtRatio: Double,
+    var priceToEarningsPerStockValue: Double
 
 
-) { constructor(): this("", "", "", "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) }
+) { constructor(): this("", "", "", "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) }
