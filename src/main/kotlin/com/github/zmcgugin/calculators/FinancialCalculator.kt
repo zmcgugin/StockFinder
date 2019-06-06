@@ -47,11 +47,15 @@ class FinancialCalculator(override val kodein: Kodein) : KodeinAware {
         return round(total / it.sharesOutstanding)
     }
 
-    fun round(it: Double): Double {
-        if(it.equals(Double.NaN)) {
-            return Double.NaN
-        }
 
-        return BigDecimal(it).setScale(2, RoundingMode.HALF_EVEN).toDouble()
+    companion object {
+        fun round(it: Double): Double {
+            if(it.equals(Double.NaN)) {
+                return Double.NaN
+            }
+
+            return BigDecimal(it).setScale(2, RoundingMode.HALF_EVEN).toDouble()
+        }
     }
+
 }

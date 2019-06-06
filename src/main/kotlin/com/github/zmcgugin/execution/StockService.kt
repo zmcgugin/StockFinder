@@ -1,5 +1,6 @@
 package com.github.zmcgugin.execution
 
+import com.github.zmcgugin.constants.Constants.Companion.SKIPPED
 import com.github.zmcgugin.constants.Settings
 import com.github.zmcgugin.finviz.services.FinvizScraper
 import com.github.zmcgugin.marketwatch.services.MarketwatchScraper
@@ -22,7 +23,7 @@ class StockService(override val kodein: Kodein) : KodeinAware {
         var results: MutableList<StockInformation> = finvizScraper.getStocks(Settings.FINVIZ_FILTER_URL)
         //TODO using parallel stream for now with common threadpool because there is a weird error with forkthreadpool that i'll figure out later.
 //      var finalResults = threadpool.submit{results.parallelStream().map{marketwatchScraper.updateFinancials(it)}.collect(Collectors.toList())}.get(5, TimeUnit.MINUTES)
-        var finalResults = results.parallelStream().map{marketwatchScraper.updateFinancials(it)}.collect(Collectors.toList())
+        var finalResults = results.parallelStream().map{marketwatchScraper.updateFinancials(it)}.filter{it.ticker != SKIPPED}.collect(Collectors.toList())
 
         display.displayResults(finalResults as List<StockInformation>)
         return finalResults

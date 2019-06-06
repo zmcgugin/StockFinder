@@ -1,7 +1,7 @@
 package com.github.zmcgugin.utility
 
+import com.github.zmcgugin.calculators.FinancialCalculator.Companion.round
 import com.github.zmcgugin.constants.Settings.Companion.ALLOWABLE_DEBT_PERCENTAGE
-import com.github.zmcgugin.constants.Settings.Companion.ALLOWABLE_FREE_CASH_INTRINISC_VALUE_MARGIN
 import com.github.zmcgugin.objects.StockInformation
 import de.vandermeer.asciitable.AsciiTable
 import org.kodein.di.Kodein
@@ -21,7 +21,7 @@ class DisplayUtil(override val kodein: Kodein) : KodeinAware {
             table.addRow(
                 "${it.ticker}",
                 "$${it.price}",
-                "${it.volume / 1000}k",
+                "${round(it.volume / 1_000)}K",
                 "${it.debtRatio}",
                 highlight(it.bookValue, it.price),
                 highlight(it.grahamsValue, it.price),
@@ -42,7 +42,7 @@ class DisplayUtil(override val kodein: Kodein) : KodeinAware {
     }
 
     private fun meetsCriteria(it: StockInformation): Boolean {
-        return ((it.liabilities / it.assets) < ALLOWABLE_DEBT_PERCENTAGE) && (it.freeCashFlowIntrinsicMarginOfSafety > ALLOWABLE_FREE_CASH_INTRINISC_VALUE_MARGIN)
+        return ((it.liabilities / it.assets) < ALLOWABLE_DEBT_PERCENTAGE)
     }
 
 }

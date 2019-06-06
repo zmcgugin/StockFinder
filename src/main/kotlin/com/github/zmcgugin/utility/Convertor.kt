@@ -24,6 +24,13 @@ class Convertor {
                 parsedValue = parsedValue.replace("B", "")
                 return parsedValue.toDouble() * 1_000_000_000
             }
+            if(parsedValue.contains("T")) {
+                parsedValue = parsedValue.replace("T", "")
+                return parsedValue.toDouble() * 1_000_000_000_000
+            }
+            if(parsedValue == "n/a") {
+                return Double.NaN
+            }
             return parsedValue.toDouble()
         }
     }
