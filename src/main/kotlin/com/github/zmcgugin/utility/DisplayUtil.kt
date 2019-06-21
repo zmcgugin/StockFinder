@@ -52,8 +52,11 @@ class DisplayUtil(override val kodein: Kodein) : KodeinAware {
     }
 
     private fun meetsCriteria(it: StockInformation): Boolean {
-        return ((it.liabilities / it.assets) < ALLOWABLE_DEBT_PERCENTAGE) &&
-                (it.bookValue > it.price || it.grahamsValue > it.price || it.priceToEarningsPerStockValue > it.price || it.freeCashFlowIntrinsicValue > it.price)
+        val acceptableDebt = (it.liabilities / it.assets) < ALLOWABLE_DEBT_PERCENTAGE
+        val hasOneValueIndicator = it.bookValue > it.price || it.grahamsValue > it.price || it.priceToEarningsPerStockValue > it.price || it.freeCashFlowIntrinsicValue > it.price
+        val positiveCashFlow = it.last12MonthsFreeCashFlow > 0
+
+        return acceptableDebt && hasOneValueIndicator && positiveCashFlow
     }
 
 }

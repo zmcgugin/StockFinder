@@ -8,6 +8,7 @@ class Convertor {
             parsedValue = parsedValue.replace(",", "")
             parsedValue = parsedValue.replace("%", "")
             parsedValue = parsedValue.replace("$", "")
+            parsedValue = parsedValue.replace("£", "")
             if(parsedValue.equals("-")) {
                 return 0.0
             }

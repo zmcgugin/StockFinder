@@ -1,0 +1,1 @@
+Made a quick and dirty program to help find stocks to buy.  This isnt written very well i might redo it when i have the time.  It was mostly a way to quickly have fun with kotlin.
